@@ -1,0 +1,55 @@
+;Kaue Klein Matos
+;FEAP avaré
+;Eng Da Computação
+; Dupla: Kaue Klein & Marcos Carros
+; Não está 100% certo mas isso foi o mais perto que eu consegui
+
+section .data
+    prompt db "Informe seu nome: ", 0
+    saudacao db "Saudacoes, ", 0
+    newline db 10, 13, 0  ; Nova linha
+    name db 100, 0       ; Espaço de armazenamento para o nome do usuário
+
+section .text
+global _start
+
+_start:
+    ; Escreve a mensagem de solicitação
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, prompt
+    mov edx, 18
+    int 0x80
+
+    ; Lê o nome do usuário
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, name
+    mov edx, 100
+    int 0x80
+
+    ; Exibe a saudação
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, saudacao
+    mov edx, 11
+    int 0x80
+
+    ; Exibe o nome do usuário
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, name
+    mov edx, 100
+    int 0x80
+
+    ; Nova linha
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, newline
+    mov edx, 2
+    int 0x80
+
+    ; Encerra o programa
+    mov eax, 1
+    mov ebx, 0
+    int 0x80
