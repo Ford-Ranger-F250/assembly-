@@ -1,0 +1,91 @@
+; Programa de comparação de dois números informados em assembly
+; Instruções cmp e jg para estudo e pesquisa
+
+; Projeto - Assembly 20 bimestre/27-Nov-2023
+
+; Author: Kaue Klein Matos, FEAP Computação | Versão: 1.0
+
+section .data
+    mensagem1 db "Digite o primeiro número: ", 0
+    mensagem2 db "Digite o segundo número: ", 0
+    mensagem_maior db "O maior número é: ", 0
+
+section .bss
+    primeiro_numero resb 4
+    segundo_numero resb 4
+
+section .text
+    global start
+
+start:
+    ; Imprimir mensagem1
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensagem1
+    mov edx, 27
+    int 0x80
+
+    ; Receber o primeiro número
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, primeiro_numero
+    mov edx, 4
+    int 0x80
+
+    ; Imprimir mensagem2
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensagem2
+    mov edx, 26
+    int 0x80
+
+    ; Receber o segundo número
+    mov eax, 3
+    mov ebx, 0
+    mov ecx, segundo_numero
+    mov edx, 4
+    int 0x80
+
+    ; Comparar os números
+    mov eax, [primeiro_numero]
+    mov ebx, [segundo_numero]
+    cmp eax, ebx
+    jg  maior_primeiro ; Se o primeiro número for maior, pular para 'maior_primeiro'
+    jmp imprimir_maior
+
+maior_primeiro:
+    ; Imprimir mensagem_maior
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensagem_maior
+    mov edx, 18
+    int 0x80
+
+    ; Imprimir o valor do primeiro número
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, primeiro_numero
+    mov edx, 4
+    int 0x80
+    jmp fim_programa
+
+imprimir_maior:
+    ; Imprimir mensagem_maior
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mensagem_maior
+    mov edx, 18
+    int 0x80
+
+    ; Imprimir o valor do segundo número
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, segundo_numero
+    mov edx, 4
+    int 0x80
+
+fim_programa:
+    ; Terminar o programa
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
